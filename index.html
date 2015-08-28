@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go Language Workshop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="monokai.css">
+    <style type="text/css">
+      @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      ul li {
+        line-height: 1.5em;
+      }
+      .remark-slide-content {
+        font-size: 1.8em;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      a {
+        text-decoration: none;
+      }
+      .footnote {
+        font-size: 20px;
+        position: absolute;
+        bottom: 3em;
+        right: 3em;
+      }
+      .important {
+        color: red;
+        display: block;
+        font-size: 1.3em;
+        padding: 2em;
+        text-align: center;
+      }
+      .remark-slide-content.full-code {
+        background-color: black;
+      }
+      .full-code .remark-code-line {
+        font-size: 2.0em;
+      }
+      .remark-code-line {
+        font-size: 2.0em;
+      }
+      .watermark
+      {
+        position: absolute;
+        opacity: 0.5;
+        font-size: 11em;
+        z-index: 1000;
+		left: 0;
+		top: 20%;
+		right: 0;
+		bottom: 0;
+		text-align: center;
+		transform: 			rotate(25deg);
+		-moz-transform: 	rotate(25deg);
+		-webkit-transform: 	rotate(25deg);
+      }
+      .fail {
+        color: red;
+	  }
+      .topic {
+        text-align: center;
+        vertical-align: middle;
+      }
+      .img-30 img {
+        width: 30%;
+      }
+      .img-50 img {
+        width: 50%;
+      }
+      .img-80 img {
+        height: 80%;
+      }
+      .black-background {
+        background-color: black;
+      }
+      .comment {
+          display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: topic
+
+# Go Language
+Workshop
+
+.footnote[[Kamil Chmielewski](https://github.com/kamilchm)]
+
+---
+name: agenda
+
+# Agenda
+
+* part0 - [Make GO go!](#part0)
+* part1 - [Language Basics](#part1)
+
+---
+class: topic
+name: part0
+
+# Make GO go!
+
+---
+
+# 1. Install Go
+
+.center[https://golang.org/dl/]
+
+# 2. Run some code!
+
+```sh
+$ git clone https://github.com/kamilchm/go-workshop
+$ cd go-workshop
+$ go run main.go
+Hello Codepot!
+```
+
+---
+class: topic
+name: part1
+
+# Language Basics
+
+---
+
+# Variables
+
+```go
+var developer string
+developer = "Kamil"
+```
+<br>
+--
+
+```go
+var developer string = "Kamil"
+```
+<br>
+--
+
+```go
+developer := "Kamil"
+```
+<br>
+
+---
+
+# Structures
+
+```go
+type Developer struct {
+    Name    string
+    Company string
+}
+```
+<br>
+--
+
+```go
+dev = Developer{Name:"Kamil", Company:"Allegro"}
+```
+
+---
+
+# Functions
+
+```go
+func developer() Developer {
+    return Developer{Name:"Kamil", Company:"Allego"}
+}
+```
+<br>
+--
+
+```go
+dev = developer()
+```
+
+---
+
+# Packages
+
+```go
+package main
+```
+<br>
+--
+
+```go
+import (
+  "fmt"
+  "os/user"
+)
+```
+--
+
+```go
+cUser, _ := user.Current()
+return Developer{cUser.Username, "Allego"}
+```
+
+---
+
+# Slices
+
+```go
+fellows := []Developer{
+    Developer{"Piotrek", "Allegro"},
+    Developer{"Janek", "SoftwareMill"},
+}
+```
+
+--
+
+```go
+fellows = append(fellows,
+    Developer{"Adam", "Allegro"})
+```
+
+--
+
+```go
+for _, fellow := range fellows {
+    fmt.Printf("Hello %v!\n", fellow.Name)
+}
+```
+
+---
+
+# Maps
+
+```go
+companies := make(map[string][]Developer)
+```
+
+--
+
+```go
+companies[fellow.Company] = 
+    append(companies[fellow.Company], fellow)
+```
+<br>
+--
+
+```go
+for company := range companies {
+    fmt.Printf("Good to see %v at Codepot!\n",
+        company)
+}
+```
+
+---
+
+# Errors
+
+```go
+func developer() (Developer, error) {
+	cUser, err := user.Current()
+	if err != nil {
+		return Developer{}, err
+	}
+	return Developer{cUser.Username, "Allegro"}, nil
+}
+```
+
+--
+
+```go
+dev, err := developer()
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+---
+
+# Pointers
+
+```go
+func developer() (*Developer, error) {
+	cUser, err := user.Current()
+	if err != nil {
+		return nil, err
+	}
+	return &amp;Developer{cUser.Username, "Allegro"}, nil
+}
+```
+
+```go
+dev, err := developer()
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+---
+
+# Methods
+
+```go
+func (d *Developer) sayGo() {
+    fmt.Println(d.Name, "says go!")
+}
+
+```
+<br>
+
+--
+
+```go
+for _, fellow := range fellows() {
+    fellow.sayGo()
+}
+```
+
+---
+
+# Interfaces
+
+```go
+type Gopher interface {
+    sayGo()
+}
+```
+<br>
+
+--
+
+```go
+companies := make(map[string][]Gopher)
+
+for _, fellow := range fellows() {
+    companies[fellow.Company] = append(
+        companies[fellow.Company], &amp;fellow)
+}
+
+```
+
+---
+
+class: middle, center
+
+# [github.com/kamilchm](https://github.com/kamilchm/)
+
+# [.img-50[![](http://allegrotech.io/img/logo-allegro-tech.svg)]](https://github.com/allegro/)
+# [.comment.black-background.img-30[![](http://skillset.pl/images/logo.png)]](http://skillset.pl/)
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+    <script src="language.go.js" type="text/javascript"></script>
+    <script>
+      var slideshow = remark.create({
+          ratio: '16:9',
+          navigation: {
+            scroll: true,
+            touch: true,
+            click: false
+          },
+          highlightStyle: 'monokai',
+        });
+    </script>
+  </body>
+</html>
