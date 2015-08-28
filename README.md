@@ -1,7 +1,4 @@
 # Go workshop repo
 
-## Check your dev environment
+See slides at http://kamilchm.github.io/go-workshop/
 
-```
-$ go run main.go
-```
