@@ -104,6 +104,7 @@ name: agenda
 
 * part0 - [Make GO go!](#part0)
 * part1 - [Language Basics](#part1)
+* part2 - [Concurrency](#part2)
 
 ---
 class: topic
@@ -345,6 +346,35 @@ for _, fellow := range fellows() {
         companies[fellow.Company], &amp;fellow)
 }
 
+```
+
+---
+class: topic
+name: part2
+
+# Concurrency
+
+---
+
+# Goroutines
+
+```go
+func workHard(job int) {
+	work := rand.Intn(10)
+	fmt.Printf("need to work for %v seconds\n", work)
+	time.Sleep(time.Duration(work) * time.Second)
+	fmt.Printf("job %v done\n", job)
+}
+```
+
+--
+
+```go
+for i := 0; i < 50; i++ {
+	go workHard(i)
+}
+
+fmt.Println("done")
 ```
 
 ---
